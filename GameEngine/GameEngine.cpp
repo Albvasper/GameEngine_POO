@@ -4,16 +4,20 @@
 
 void init_game();
 bool exitKeyPressed();
+void getInput();
 void update();
+void render();
 List <GameObject> goList;
 
 int main() {
 	init_game();
 	while (1) {
+		getInput();
 		if (exitKeyPressed()) {
 			break;
-			update();
 		}
+		update();
+		render();
 	}
 	std::cout << "Hello World!" << std::endl;
 }
@@ -23,43 +27,20 @@ void init_game() {
 	goList.Insert(GameObject());
 	goList.printSize();
 }
+
 bool exitKeyPressed() {
 	return (GetKeyState(VK_ESCAPE) & 0x800);
 }
+
+void getInput() {
+}
+
 void update() {
 	Node<GameObject> *it = goList.first;
 	while (it){
 		it->data.Update();
 	}
 }
-//class Base {
-//	public:
-//		virtual void print() {
-//			std::cout<< "Base" <<std::endl;
-//		}
-//};
-//
-//class Derivada : public Base {
-//	public:
-//		void print() {
-//			std::cout << "Derivada" << std::endl;
-//		}
-//};
-//
-//class Derivada2 : public Derivada {
-//	public:
-//		void print2() {
-//			std::cout << "lol" << std::endl;
-//		}
-//};	
-//
-//int main() {
-//	Base* cb, ba;
-//	cb = &ba;
-//	cb->print();
-//	Derivada d1;
-//	cb = &d1; //Almacena la direccion de memoria de d1
-//	static_cast <Derivada2*>(cb)->print2(); //Forma PRO de hacer casting
-//    std::cout << "Hello World!\n";	
-//}
 
+void render() {
+}

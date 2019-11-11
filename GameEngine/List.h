@@ -2,7 +2,7 @@
 #include "Node.h"
 #include <iostream>
 
-template <class T> class List {
+template <class T = GameObject> class List {
 	public:
 		Node<T> *first;
 		Node<T> *last;
@@ -25,14 +25,12 @@ template <class T> void List<T>::Insert(T data) {
 	if (first == nullptr) {
 		first = tmp;
 		last = first;
-	}
-	else {
+	} else {
 		if (first == last) {
 			first->next = tmp;
 			last = tmp;
 			last->prev = first;
-		}
-		else {
+		} else {
 			last->next = tmp;
 			tmp->prev = last;
 			last = tmp;
