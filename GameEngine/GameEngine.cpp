@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "List.h"	
 #include <Windows.h>
+#include "Player.h"
 
 void init_game();
 bool exitKeyPressed();
@@ -23,8 +24,8 @@ int main() {
 }
 
 void init_game() {
-	goList.Insert(GameObject());
-	goList.Insert(GameObject());
+	goList.Insert(GameObject(78));
+	goList.Insert(Player(99));
 	goList.printSize();
 }
 
@@ -39,6 +40,7 @@ void update() {
 	Node<GameObject> *it = goList.first;
 	while (it){
 		it->data.Update();
+		it = it->next;
 	}
 }
 

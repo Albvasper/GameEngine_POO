@@ -5,12 +5,12 @@ Player::Player() {
 
 }
 
-Player::Player(short i) : GameObject() {
+Player::Player(short i) : GameObject(i) {
 
 }
 
 void Player::Update() {
-	std::cout << "Update GameObject" << std::endl;
+	std::cout << id << ": Update Player" << std::endl;
 }
 
 Player::~Player() {

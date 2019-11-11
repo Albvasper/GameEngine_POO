@@ -2,5 +2,5 @@
 #include "GameObject.h"
 
 void GameObject::Update() {
-	std::cout << "Update GameObject" << std::endl;
+	std::cout << id << ": Update GameObject" << std::endl;
 }
