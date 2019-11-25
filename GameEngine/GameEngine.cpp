@@ -42,7 +42,7 @@ void Swapping(GameObject& a, GameObject& b) {
 void SelectionSort(GameObject goArray[], short size) {
 	short i;
 	short j;
-	short minVal;
+	short minVal; //Min data
 	for (i = 0; i < size - 1; i++) {
 		minVal = i;
 		for (j = i + 1; j < size; j++) {
@@ -50,27 +50,29 @@ void SelectionSort(GameObject goArray[], short size) {
 				minVal = j;
 			}
 		}
+		//Swapping places with the minVal
 		Swapping(goArray[i], goArray[minVal]);
 	}
 }
 
 void Heapify(GameObject goarray[], int size, int i) {
-	int largest = i;
+	int largest = i; //Largest is the root when init
 	int l = 2 * i + 1;
 	int r = 2 * i + 2;
-	if (l < size && goarray[l].GetID() > goarray[largest].GetID()) {
+	if (l < size && goarray[l].GetID() > goarray[largest].GetID()) {  // If left child is larger than root 
 		largest = l;
 	}
-	if (r < size && goarray[r].GetID() > goarray[largest].GetID()) {
+	if (r < size && goarray[r].GetID() > goarray[largest].GetID()) { // If right child is larger than largest so far 
 		largest = r;
 	}
-	if (largest != i) {
+	if (largest != i) { // If largest is not root 
 		Swapping(goarray[i], goarray[largest]);
 		Heapify(goarray, size, largest);
 	}
 }
 
 void HeapSort(GameObject goArray[], short size) {
+	//rearrange array
 	for (int i = size / 2 - 1; i >= 0; i--) {
 		Heapify(goArray, size, i);
 	}
@@ -209,7 +211,24 @@ void printBoard(short board[9][9]) {
 }
 
 void SearchMine(short board[9][9]) {
-	for (int i = 0; i < 10; i++) {
+	int i = 0;
+	int j = 0;
+	if (board[i][j] == 0) {
+		if (board[i + 1][j] == 1) {
+			board[i][j] + 1;
+		}
+		if (board[i][j + 1] == 1) {
+			board[i][j] + 1;
+		}
+		if (board[i][j - 1] == 1) {
+			board[i][j] + 1;
+		}
+		if (board[i - 1][j] == 1) {
+			board[i][j] + 1;
+		}
+	}
+	SearchMine(board);
+	/*for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			if (board[i][j] == 0) {
 				if (board[i + 1][j] == 1) {
@@ -226,5 +245,5 @@ void SearchMine(short board[9][9]) {
 				}
 			}
 		}
-	}
+	}*/
 }
