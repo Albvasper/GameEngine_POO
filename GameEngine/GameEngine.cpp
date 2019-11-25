@@ -2,25 +2,164 @@
 #include "List.h"	
 #include <Windows.h>
 #include "Player.h"
+#include <stdlib.h> 
+#include <ctime>
 
 void init_game();
 bool exitKeyPressed();
 void getInput();
 void update();
 void render();
+void FillBoard(short board[9][9]);
+void printBoard(short board[9][9]);
+void SearchMine(short board[9][9]);
 List <GameObject> goList;
+short gameboard[9][9];
+
+void Merge(GameObject goArray[], int p, int q, int r) {
+	int leftSize = q - p + 1;
+	int rightSize = r - q;
+	int i;
+	int j;
+	int k;
+	int L[100];
+	int R[100];
+}
+
+void MergeSort(GameObject goArray[]) {
+
+}
+
+void Swapping(GameObject& a, GameObject& b) {
+	//Switch positions between a and b
+	GameObject temp;
+	temp = a;
+	a = b;
+	b = temp;
+
+}
+
+void SelectionSort(GameObject goArray[], short size) {
+	short i;
+	short j;
+	short minVal;
+	for (i = 0; i < size - 1; i++) {
+		minVal = i;
+		for (j = i + 1; j < size; j++) {
+			if (goArray[j].GetID() < goArray[minVal].GetID()) {
+				minVal = j;
+			}
+		}
+		Swapping(goArray[i], goArray[minVal]);
+	}
+}
+
+void Heapify(GameObject goarray[], int size, int i) {
+	int largest = i;
+	int l = 2 * i + 1;
+	int r = 2 * i + 2;
+	if (l < size && goarray[l].GetID() > goarray[largest].GetID()) {
+		largest = l;
+	}
+	if (r < size && goarray[r].GetID() > goarray[largest].GetID()) {
+		largest = r;
+	}
+	if (largest != i) {
+		Swapping(goarray[i], goarray[largest]);
+		Heapify(goarray, size, largest);
+	}
+}
+
+void HeapSort(GameObject goArray[], short size) {
+	for (int i = size / 2 - 1; i >= 0; i--) {
+		Heapify(goArray, size, i);
+	}
+	for (int i = size - 1; i >= 0; i--) {
+		Swapping(goArray[0], goArray[i]);
+		Heapify(goArray, i, 0);
+	}
+}
+
+int Partition(GameObject goArray[], int low, int high) {
+	GameObject pivot;
+	pivot = goArray[high];
+	int i = (low - 1);
+	for (int j = low; j <= high - 1; j++) {
+		if (goArray[j].GetID() < pivot.GetID()) {
+			i++;
+			Swapping(goArray[i], goArray[j]);
+		}
+	}
+	Swapping(goArray[i + 1], goArray[high]);
+	return (i + 1);
+}
+
+void QuickSort(GameObject goArray[], int low, int high) {
+	if (low < high) {
+		int pIndex = Partition(goArray, low, high);
+		QuickSort(goArray, low, pIndex - 1);
+		QuickSort(goArray, pIndex + 1, high);
+	}
+}
+
+void printArr(GameObject goArray[], int size) {
+	for (int i = 0; i < size; i++) {
+		std::cout << i << ": " << goArray[i].GetID() << " " << std::endl;
+	}
+}
 
 int main() {
-	init_game();
-	while (1) {
+	srand(time(NULL));
+	FillBoard(gameboard);
+	SearchMine(gameboard);
+	printBoard(gameboard);
+	//init_game();
+	/*while (1) {
 		getInput();
 		if (exitKeyPressed()) {
 			break;
 		}
 		update();
 		render();
-	}
-	std::cout << "Hello World!" << std::endl;
+	}*/
+
+	GameObject go1;
+	GameObject go2;
+	GameObject go3;
+	GameObject go4;
+	GameObject go5;
+
+	GameObject goArray1[4];
+	GameObject goArray2[4];
+	GameObject goArray3[4];
+	GameObject goArray4[4];
+
+	goArray1[0] = go1;
+	goArray1[1] = go2;
+	goArray1[2] = go3;
+	goArray1[3] = go4;
+
+	goArray2[0] = go1;
+	goArray2[1] = go2;
+	goArray2[2] = go3;
+	goArray2[3] = go4;
+
+	goArray3[0] = go1;
+	goArray3[1] = go2;
+	goArray3[2] = go3;
+	goArray3[3] = go4;
+
+	goArray4[0] = go1;
+	goArray4[1] = go2;
+	goArray4[2] = go3;
+	goArray4[3] = go4;
+
+	std::cout << "Before: " << std::endl;
+	printArr(goArray1, 4);
+	std::cout << "After: " << std::endl;
+	QuickSort(goArray1, 0, 3);
+	printArr(goArray1, 4);
+	return 0;
 }
 
 void init_game() {
@@ -45,4 +184,47 @@ void update() {
 }
 
 void render() {
+}
+
+void FillBoard(short board[9][9]) {
+	board[rand() % 10][rand() % 10] = 1;
+	board[rand() % 10][rand() % 10] = 1;
+	board[rand() % 10][rand() % 10] = 1;
+	board[rand() % 10][rand() % 10] = 1;
+	board[rand() % 10][rand() % 10] = 1;
+	board[rand() % 10][rand() % 10] = 1;
+	board[rand() % 10][rand() % 10] = 1;
+	board[rand() % 10][rand() % 10] = 1;
+	board[rand() % 10][rand() % 10] = 1;
+	board[rand() % 10][rand() % 10] = 1;
+}
+
+void printBoard(short board[9][9]) {
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			std::cout << board[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
+}
+
+void SearchMine(short board[9][9]) {
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			if (board[i][j] == 0) {
+				if (board[i + 1][j] == 1) {
+					board[i][j] + 1;
+				}
+				if (board[i][j + 1] == 1) {
+					board[i][j] + 1;
+				}
+				if (board[i][j - 1] == 1) {
+					board[i][j] + 1;
+				}
+				if (board[i - 1][j] == 1) {
+					board[i][j] + 1;
+				}
+			}
+		}
+	}
 }
