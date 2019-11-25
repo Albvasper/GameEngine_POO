@@ -10,21 +10,11 @@ bool exitKeyPressed();
 void getInput();
 void update();
 void render();
-void FillBoard(short board[9][9]);
-void printBoard(short board[9][9]);
-void SearchMine(short board[9][9]);
+void FillBoard();
+void printBoard();
+void SearchMine(int i, int j);
 List <GameObject> goList;
-short gameboard[9][9];
-
-void Merge(GameObject goArray[], int p, int q, int r) {
-	int leftSize = q - p + 1;
-	int rightSize = r - q;
-	int i;
-	int j;
-	int k;
-	int L[100];
-	int R[100];
-}
+int board[10][10];
 
 void MergeSort(GameObject goArray[]) {
 
@@ -112,9 +102,10 @@ void printArr(GameObject goArray[], int size) {
 
 int main() {
 	srand(time(NULL));
-	FillBoard(gameboard);
-	SearchMine(gameboard);
-	printBoard(gameboard);
+	FillBoard();
+	printBoard();
+	SearchMine(4, 4);
+	printBoard();
 	//init_game();
 	/*while (1) {
 		getInput();
@@ -161,6 +152,18 @@ int main() {
 	std::cout << "After: " << std::endl;
 	QuickSort(goArray1, 0, 3);
 	printArr(goArray1, 4);
+
+	std::cout << "Before: " << std::endl;
+	printArr(goArray2, 4);
+	std::cout << "After: " << std::endl;
+	HeapSort(goArray2, 4);
+	printArr(goArray2, 4);
+
+	std::cout << "Before: " << std::endl;
+	printArr(goArray3, 4);
+	std::cout << "After: " << std::endl;
+	SelectionSort(goArray3, 4);
+	printArr(goArray3, 4);
 	return 0;
 }
 
@@ -188,62 +191,61 @@ void update() {
 void render() {
 }
 
-void FillBoard(short board[9][9]) {
-	board[rand() % 10][rand() % 10] = 1;
-	board[rand() % 10][rand() % 10] = 1;
-	board[rand() % 10][rand() % 10] = 1;
-	board[rand() % 10][rand() % 10] = 1;
-	board[rand() % 10][rand() % 10] = 1;
-	board[rand() % 10][rand() % 10] = 1;
-	board[rand() % 10][rand() % 10] = 1;
-	board[rand() % 10][rand() % 10] = 1;
-	board[rand() % 10][rand() % 10] = 1;
-	board[rand() % 10][rand() % 10] = 1;
+void FillBoard() {
+	board[rand() % 10][rand() % 10] = -1;
+	board[rand() % 10][rand() % 10] = -1;
+	board[rand() % 10][rand() % 10] = -1;
+	board[rand() % 10][rand() % 10] = -1;
+	board[rand() % 10][rand() % 10] = -1;
+	board[rand() % 10][rand() % 10] = -1;
+	board[rand() % 10][rand() % 10] = -1;
+	board[rand() % 10][rand() % 10] = -1;
+	board[rand() % 10][rand() % 10] = -1;
+	board[rand() % 10][rand() % 10] = -1;
 }
 
-void printBoard(short board[9][9]) {
+void printBoard() {
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			std::cout << board[i][j] << " ";
 		}
 		std::cout << std::endl;
 	}
+
+	std::cout << std::endl;
+	std::cout << std::endl;
 }
 
-void SearchMine(short board[9][9]) {
-	int i = 0;
-	int j = 0;
-	if (board[i][j] == 0) {
-		if (board[i + 1][j] == 1) {
-			board[i][j] + 1;
+void SearchMine(int i, int j) {
+	if (i < 9 && j < 9 && i > 0 && j > 0) {
+		if (board[i + 1][j] == -1) {
+			board[i][j] += 1;
 		}
-		if (board[i][j + 1] == 1) {
-			board[i][j] + 1;
+		if (board[i][j + 1] == -1) {
+			board[i][j] += 1;
 		}
-		if (board[i][j - 1] == 1) {
-			board[i][j] + 1;
+		if (board[i - 1][j] == -1) {
+			board[i][j] += 1;
 		}
-		if (board[i - 1][j] == 1) {
-			board[i][j] + 1;
+		if (board[i][j - 1] == -1) {
+			board[i][j] += 1;
+		}
+
+		if (board[i + 1][j] == 0) {
+			if (board[i][j] == 0) board[i][j] = -2;
+			SearchMine(i + 1, j);
+		}
+		if (board[i][j + 1] == 0) {
+			if (board[i][j] == 0) board[i][j] = -2;
+			SearchMine(i, j + 1);
+		}
+		if (board[i - 1][j] == 0) {
+			if (board[i][j] == 0) board[i][j] = -2;
+			SearchMine(i - 1, j);
+		}
+		if (board[i][j - 1] == 0) {
+			if (board[i][j] == 0) board[i][j] = -2;
+			SearchMine(i, j - 1);
 		}
 	}
-	SearchMine(board);
-	/*for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
-			if (board[i][j] == 0) {
-				if (board[i + 1][j] == 1) {
-					board[i][j] + 1;
-				}
-				if (board[i][j + 1] == 1) {
-					board[i][j] + 1;
-				}
-				if (board[i][j - 1] == 1) {
-					board[i][j] + 1;
-				}
-				if (board[i - 1][j] == 1) {
-					board[i][j] + 1;
-				}
-			}
-		}
-	}*/
 }
