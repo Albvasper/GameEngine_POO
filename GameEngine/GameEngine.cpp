@@ -102,10 +102,6 @@ void printArr(GameObject goArray[], int size) {
 
 int main() {
 	srand(time(NULL));
-	FillBoard();
-	printBoard();
-	SearchMine(4, 4);
-	printBoard();
 	//init_game();
 	/*while (1) {
 		getInput();
@@ -146,24 +142,6 @@ int main() {
 	goArray4[1] = go2;
 	goArray4[2] = go3;
 	goArray4[3] = go4;
-
-	std::cout << "Before: " << std::endl;
-	printArr(goArray1, 4);
-	std::cout << "After: " << std::endl;
-	QuickSort(goArray1, 0, 3);
-	printArr(goArray1, 4);
-
-	std::cout << "Before: " << std::endl;
-	printArr(goArray2, 4);
-	std::cout << "After: " << std::endl;
-	HeapSort(goArray2, 4);
-	printArr(goArray2, 4);
-
-	std::cout << "Before: " << std::endl;
-	printArr(goArray3, 4);
-	std::cout << "After: " << std::endl;
-	SelectionSort(goArray3, 4);
-	printArr(goArray3, 4);
 	return 0;
 }
 
