@@ -6,15 +6,16 @@ template <class T> class Vector {
 		T** arr;
 		int size;
 		int current; 
+		int last;
 
 	public:
 		Vector<T>();
 		Vector<T>(int _size);
-		void Push(T val);
 		void PushIndex(T val, int index);
 		T At(int index);
 		void Pop();
-		int Size();
+		void PopAt(int index);
+		int NumberOfElements();
 		int GetCapacity();
 		void Print();
 		~Vector<T>();
@@ -25,17 +26,17 @@ template <class T> Vector<T>::Vector() {
 	for (int i = 0; i < size; i++) {
 		arr[i] = nullptr;
 	}
+	//last = 20;
 }
 
 template <class T> Vector<T>::Vector(int _size) {
 	size = _size;
+	last = _size;
 	arr = new T * [size];
 	for (int i = 0; i < size; i++) {
 		arr[i] = nullptr;
 	}
-}
-
-template <class T> void Vector<T>::Push(T val) {
+	//last = size;
 }
 
 template <class T> void Vector<T>::PushIndex(T val, int index) {
@@ -45,21 +46,27 @@ template <class T> void Vector<T>::PushIndex(T val, int index) {
 	else if (size < index) {
 		std::cout << "Index too big!" << std::endl;
 	}
+	last = index;
 }
 
 template <class T> T Vector<T>::At(int index) {
-	return T();
+	return arr[index];
 }
 
 template <class T> void Vector<T>::Pop() {
+	arr[last] = NULL;
 }
 
-template < class T> int Vector<T>::Size() {
+template <class T> void Vector<T>::PopAt(int index) {
+	arr[index] = NULL;
+}
+
+template <class T> int Vector<T>::NumberOfElements() {
 	return 0;
 }
 
 template <class T> int Vector<T>::GetCapacity() {
-	return 0;
+	return size;
 }
 
 template <class T> void Vector<T>::Print() {
