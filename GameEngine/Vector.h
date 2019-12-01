@@ -4,14 +4,15 @@
 template <class T> class Vector {
 	private:
 		T** arr;
-		int size;
 		int current; 
 		int last;
 
 	public:
+		int size;
 		Vector<T>();
 		Vector<T>(int _size);
-		void PushIndex(T val, int index);
+		void PushIndex(GameObject val, int unsigned index);
+		void PushIndex(GameObject val, int index);
 		T At(int index);
 		void Pop();
 		void PopAt(int index);
@@ -39,9 +40,15 @@ template <class T> Vector<T>::Vector(int _size) {
 	//last = size;
 }
 
-template <class T> void Vector<T>::PushIndex(T val, int index) {
-	if (index >= size) {
-		arr[index] = val;
+template <class T> void Vector<T>::PushIndex(GameObject val, int unsigned index) {
+	if (index < size) {
+		if (arr[index] != nullptr) {
+			val.subArrID = val.subArrID + 1;
+			arr[index][val.subArrID] = val;
+		}
+		else if (arr[index] == nullptr) {
+			arr[index] = &val;
+		}
 	}
 	else if (size < index) {
 		std::cout << "Index too big!" << std::endl;
@@ -54,11 +61,14 @@ template <class T> T Vector<T>::At(int index) {
 }
 
 template <class T> void Vector<T>::Pop() {
-	arr[last] = NULL;
+	arr[size] = nullptr;
+	//arr[last] = nullptr;
+	size = size - 1;
 }
 
 template <class T> void Vector<T>::PopAt(int index) {
-	arr[index] = NULL;
+	arr[index] = nullptr;
+	size = size - 1;
 }
 
 template <class T> int Vector<T>::NumberOfElements() {

@@ -1,14 +1,23 @@
 #include "pch.h"
 #include "GameObject.h"
 
-GameObject::GameObject() {
-	id = rand() % 10 + 1;
+GameObject::GameObject()
+{
+}
+
+GameObject::GameObject(int _id) {
+	id = _id;
 }
 
 void GameObject::Update() {
 	std::cout << id << ": Update GameObject" << std::endl;
 }
 
-short GameObject::GetID() {
+int GameObject::GetID() {
 	return id;
 }
+
+int GameObject::GetSubID() {
+	return subArrID;
+}
+	

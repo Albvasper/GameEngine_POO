@@ -4,6 +4,8 @@
 #include "Player.h"
 #include <stdlib.h> 
 #include <ctime>
+#include "HashTable.h"
+#include "Vector.h"
 
 void init_game();
 bool exitKeyPressed();
@@ -101,7 +103,18 @@ void printArr(GameObject goArray[], int size) {
 }
 
 int main() {
-	srand(time(NULL));
+	GameObject go1(34343);
+	GameObject go2(34344);
+	GameObject go3(34345);
+	GameObject go4(34346);
+	GameObject go5(43434);
+	HashTable<GameObject> ht(20);
+	ht.assignIndex(go1);
+	ht.assignIndex(go2);
+	ht.assignIndex(go3);
+	ht.assignIndex(go4);
+	ht.assignIndex(go5);
+	ht.DeleteAt(2);
 	//init_game();
 	/*while (1) {
 		getInput();
@@ -111,12 +124,6 @@ int main() {
 		update();
 		render();
 	}*/
-
-	GameObject go1;
-	GameObject go2;
-	GameObject go3;
-	GameObject go4;
-	GameObject go5;
 
 	GameObject goArray1[4];
 	GameObject goArray2[4];

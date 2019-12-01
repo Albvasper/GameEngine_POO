@@ -5,11 +5,14 @@
 class GameObject {
 
 	public:
-		short id = 0;
+		int id = 0;
+		int subArrID = 0;
 		GameObject();
+		GameObject(int _id);
 		virtual void Update();
 		GameObject(short i): id(i) {}
-		short GetID();
+		int GetID();
+		int GetSubID();
 		~GameObject() {}
 
 };
